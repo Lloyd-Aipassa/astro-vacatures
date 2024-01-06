@@ -1,0 +1,16 @@
+{
+  "name": "receptive-remnant",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/netlify": "^4.1.0",
+    "astro": "^4.1.1"
+  }
+}
