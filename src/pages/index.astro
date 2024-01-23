@@ -11,10 +11,19 @@ const data = await response.json();
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
+		<script defer src="/src/javascript/card.js"></script>
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
 	<body>
+		<app-header
+			link1="https://rocketsourcers-vacatures.netlify.app/"
+			link2="https://dev-lloyd.nl"
+			link3="https://dev-lloyd.nl"
+			link4="https://dev-lloyd.nl"
+		>
+			<div slot="naam">Your Website Name</div>
+		</app-header>
 		<h1>Vacatures</h1>
 
 		<p>{data.offers[0].title}</p>
@@ -23,15 +32,14 @@ const data = await response.json();
 			{
 				data.offers.map((d) => (
 					<li class="card">
-						
-							<h2>{d.title}</h2>
-							<br />
-						
+						<h2>{d.title}</h2>
+						<br />
+
 						<p>{d.country}</p>
-						
-							<p>{d.location}</p>
-							<br />
-						
+
+						<p>{d.location}</p>
+						<br />
+
 						<a href={d.slug}>
 							bekijk vacature
 						</a>
@@ -50,33 +58,32 @@ const data = await response.json();
 		text-decoration: none;
 		font-family: Arial, Helvetica, sans-serif;
 	}
-	
+
 	h1 {
 		font-size: 50px;
 		margin: 80px 0;
 	}
-	
+
 	h2 {
 		font-size: 25px;
 	}
-	
+
 	p {
 		font-size: 16px;
 	}
-	
+
 	ul {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 24px;
 	}
-	
+
 	li.card {
 		list-style: none;
 		border: 1px solid #1d1d1d;
 		padding: 40px;
-	
 	}
-	
+
 	a {
 		display: block;
 		background-color: #1d1d1d;
@@ -85,25 +92,25 @@ const data = await response.json();
 		margin-top: 24px;
 		width: 250px;
 	}
-	
-	@media (max-width:600px) {
+
+	@media (max-width: 600px) {
 		h1 {
 			font-size: 30px;
 			margin: 80px 0;
 		}
-	
+
 		h2 {
 			font-size: 15px;
 		}
-	
+
 		p {
 			font-size: 14px;
 		}
-	
+
 		ul {
 			display: grid;
 			grid-template-columns: 1fr;
 			gap: 24px;
 		}
 	}
-	</style>
+</style>

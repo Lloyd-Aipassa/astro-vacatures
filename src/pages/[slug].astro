@@ -7,13 +7,12 @@ const response = await fetch(
 const data = await response.json();
 ---
 
-<script>
-
-	alert(window.innerWidth)
-console.log(window.location.pathname);
-	const form = document.querySelector("#candidateForm")
-	form.addEventListener('submit', event => {
-        event.preventDefault();
+<script type="javascript">
+	alert(window.innerWidth);
+	console.log(window.location.pathname);
+	const form = document.querySelector("#candidateForm");
+	form.addEventListener("submit", (event) => {
+		event.preventDefault();
 
 		const formData = new FormData(form);
 
@@ -26,8 +25,7 @@ console.log(window.location.pathname);
 				// Append file data to a separate FormData for binary upload
 				fileData.append(
 					key,
-					form.elements[key]
-						.files[0]
+					form.elements[key].files[0]
 				);
 			} else {
 				// Include non-file fields in JSON data
@@ -44,8 +42,7 @@ console.log(window.location.pathname);
 			{
 				method: "POST",
 				headers: {
-					"Content-Type":
-						"application/json",
+					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
 					candidate: jsonData,
@@ -65,13 +62,10 @@ console.log(window.location.pathname);
 				// Handle success response
 			})
 			.catch((error) => {
-				console.error(
-					"Error:",
-					error.message
-				);
+				console.error("Error:", error.message);
 				// Handle error
 			});
-	})
+	});
 </script>
 
 <html lang="nl">
@@ -80,9 +74,18 @@ console.log(window.location.pathname);
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<script defer src="/src/javascript/card.js"></script>
 		<title>Astro</title>
 	</head>
 	<body>
+		<app-header
+			link1="https://rocketsourcers-vacatures.netlify.app/"
+			link2="https://dev-lloyd.nl"
+			link3="https://dev-lloyd.nl"
+			link4="https://dev-lloyd.nl"
+		>
+			<div slot="naam">Your Website Name</div>
+		</app-header>
 		{slug}
 		<main>
 			<h1>Functieomschrijving</h1>
@@ -121,13 +124,10 @@ console.log(window.location.pathname);
 					id="photo"
 					name="photo"
 					accept="image/*"
-				
 				/><br />
 
 				<label for="coverLetter">Cover Letter:</label>
-				<textarea
-					id="coverLetter"
-					name="coverLetter"
+				<textarea id="coverLetter" name="coverLetter"
 				></textarea><br />
 
 				<label for="cv">CV:</label>
@@ -136,7 +136,6 @@ console.log(window.location.pathname);
 					id="cv"
 					name="cv"
 					accept=".pdf"
-				
 				/><br />
 
 				<!-- <button type="button" onclick="submitForm()"
@@ -146,12 +145,8 @@ console.log(window.location.pathname);
 				<input type="submit" value="Submit" />
 			</form>
 		</main>
-
-	
 	</body>
 </html>
-
-
 
 <style>
 	* {
