@@ -71,10 +71,10 @@ class AppHeader extends HTMLElement {
             }
 
             nav {
+                position: absolute;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                position: absolute;
                 height: 100vh;
                 top: 0;
                 right: 0;
