@@ -5,7 +5,7 @@ class AppHeader extends HTMLElement {
 		// Voeg shadow root toe
 		const shadowRoot = this.attachShadow({ mode: "open" });
 
-		// HTML template voor de Shadow DOM 
+		// HTML template voor de Shadow DOM
 		const template = document.createElement("template");
 
 		template.innerHTML = `
@@ -80,7 +80,6 @@ class AppHeader extends HTMLElement {
                 right: 0;
                 background-color: #333;
                 width: 0;
-                
                 opacity: 0;
                 transition: all 1s;
             }
@@ -97,10 +96,10 @@ class AppHeader extends HTMLElement {
         <h1> <slot name='naam' /></h1>
         <img id="burger" src="/images/burger-menu.svg" width="25" height="25" alt="">
         <nav id="navigatie">
-            <a href="${this.getAttribute('link1')}">Home</a>
-            <a href="${this.getAttribute('link2')}">About</a>
-            <a href="${this.getAttribute('link3')}">Services</a>
-            <a href="${this.getAttribute('link4')}">Contact</a>
+            <a href="${this.getAttribute("link1")}">Home</a>
+            <a href="${this.getAttribute("link2")}">About</a>
+            <a href="${this.getAttribute("link3")}">Services</a>
+            <a href="${this.getAttribute("link4")}">Contact</a>
         </nav>
     </header>
         `;
@@ -109,12 +108,15 @@ class AppHeader extends HTMLElement {
 		const shadowRootContent = template.content.cloneNode(true);
 		shadowRoot.appendChild(shadowRootContent);
 
-        const menu = shadowRoot.getElementById("navigatie");
-		this.shadowRoot.querySelector("#burger").addEventListener('click', () => {menu.classList.toggle("open");});
+		const menu = shadowRoot.getElementById("navigatie");
+		this.shadowRoot
+			.querySelector("#burger")
+			.addEventListener("click", () => {
+				menu.classList.toggle("open");
+			});
 		// this.shadowRoot.querySelector("#burger").addEventListener('click', () => {menu.style.opacity = "1"});
 	}
 }
 
 // Define the custom element tag
 customElements.define("app-header", AppHeader);
-
