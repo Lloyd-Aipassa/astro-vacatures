@@ -77,15 +77,15 @@ class AppHeader extends HTMLElement {
                 justify-content: center;
                 height: 100vh;
                 top: 0;
-                right: 0;
+                left: 0;
                 background-color: #333;
-                width: 0;
+                width: 0%;
                 opacity: 0;
                 transition: all 1s;
             }
 
             .open{
-                width: 100%;
+                width: 95%;
                 opacity: 1;
                 transition: all 1s;
             }
