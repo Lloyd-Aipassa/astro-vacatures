@@ -79,14 +79,14 @@ class AppHeader extends HTMLElement {
                 top: 0;
                 right: 0;
                 background-color: #333;
-                width: 100%;
-                transform: translateX(100%); 
+                width: 0;
+                
                 opacity: 0;
                 transition: all 1s;
             }
 
             .open{
-                transform: translateX(0); 
+                width: 100%;
                 opacity: 1;
                 transition: all 1s;
             }
