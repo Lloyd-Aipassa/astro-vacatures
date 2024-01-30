@@ -1,16 +1,15 @@
 <script>
+	class AppHeader extends HTMLElement {
+		constructor() {
+			super();
 
-class AppHeader extends HTMLElement {
-	constructor() {
-		super();
+			// Voeg shadow root toe
+			const shadowRoot = this.attachShadow({ mode: "open" });
 
-		// Voeg shadow root toe
-		const shadowRoot = this.attachShadow({ mode: "open" });
+			// HTML template voor de Shadow DOM
+			const template = document.createElement("template");
 
-		// HTML template voor de Shadow DOM 
-		const template = document.createElement("template");
-
-		template.innerHTML = `
+			template.innerHTML = `
         <style>
         header {
             position: relative;
@@ -30,7 +29,6 @@ class AppHeader extends HTMLElement {
         nav {
             display: flex;
             justify-content: center;
-            /* background-color: #444; */
             padding: 10px;
         }
 
@@ -57,7 +55,7 @@ class AppHeader extends HTMLElement {
                 position: relative;
                 background-color: #333;
                 color: #fff;
-                padding: 10px;
+                padding: 0 10px;
                 text-align: center;
                 display: flex;
                 align-items: center;
@@ -76,6 +74,7 @@ class AppHeader extends HTMLElement {
             }
 
             nav {
+                padding: 0;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -87,14 +86,12 @@ class AppHeader extends HTMLElement {
                 background-color: #333;
                 width: 100%;
                 transform: translateX(100%); 
-                opacity: 0;
                 transition: all 1s;
             }
 
             .open{
                 transform: translateX(0); 
-                opacity: 1;
-                transition: all 1s;
+                transition: all 700ms;
             }
         }
     </style>
@@ -103,26 +100,29 @@ class AppHeader extends HTMLElement {
         <h1> <slot name='naam' /></h1>
         <img id="burger" src="/images/burger-menu.svg" width="25" height="25" alt="">
         <nav id="navigatie">
-            <a href="${this.getAttribute('link1')}">Home</a>
-            <a href="${this.getAttribute('link2')}">About</a>
-            <a href="${this.getAttribute('link3')}">Services</a>
-            <a href="${this.getAttribute('link4')}">Contact</a>
+            <a href="${this.getAttribute("link1")}">Home</a>
+            <a href="${this.getAttribute("link2")}">About</a>
+            <a href="${this.getAttribute("link3")}">Services</a>
+            <a href="${this.getAttribute("link4")}">Contact</a>
         </nav>
     </header>
         `;
 
-		// Append de tamplate aan de shadow DOM
-		const shadowRootContent = template.content.cloneNode(true);
-		shadowRoot.appendChild(shadowRootContent);
+			// Append de tamplate aan de shadow DOM
+			const shadowRootContent =
+				template.content.cloneNode(true);
+			shadowRoot.appendChild(shadowRootContent);
 
-        const menu = shadowRoot.getElementById("navigatie");
-		this.shadowRoot.querySelector("#burger").addEventListener('click', () => {menu.classList.toggle("open");});
-		// this.shadowRoot.querySelector("#burger").addEventListener('click', () => {menu.style.opacity = "1"});
+			const menu = shadowRoot.getElementById("navigatie");
+			this.shadowRoot
+				.querySelector("#burger")
+				.addEventListener("click", () => {
+					menu.classList.toggle("open");
+				});
+			// this.shadowRoot.querySelector("#burger").addEventListener('click', () => {menu.style.opacity = "1"});
+		}
 	}
-}
 
-// Define the custom element tag
-customElements.define("app-header", AppHeader);
-
-
+	// Define the custom element tag
+	customElements.define("app-header", AppHeader);
 </script>
