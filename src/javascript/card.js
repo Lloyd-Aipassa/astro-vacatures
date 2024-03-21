@@ -28,7 +28,6 @@ class AppHeader extends HTMLElement {
         nav {
             display: flex;
             justify-content: center;
-            /* background-color: #444; */
             padding: 10px;
         }
 
@@ -55,7 +54,7 @@ class AppHeader extends HTMLElement {
                 position: relative;
                 background-color: #333;
                 color: #fff;
-                padding: 10px;
+                padding: 0 10px;
                 text-align: center;
                 display: flex;
                 align-items: center;
@@ -74,25 +73,24 @@ class AppHeader extends HTMLElement {
             }
 
             nav {
+                padding: 0;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 position: absolute;
                 height: 100vh;
-                height: calc(100vh - 100px);
+                height: calc(100svh - 100px);
                 top: 100px;
                 right: 0;
                 background-color: #333;
                 width: 100%;
                 transform: translateX(100%); 
-                opacity: 0;
                 transition: all 1s;
             }
 
             .open{
                 transform: translateX(0); 
-                opacity: 1;
-                transition: all 1s;
+                transition: all 700ms;
             }
         }
     </style>

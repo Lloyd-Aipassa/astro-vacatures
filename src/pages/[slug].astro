@@ -2,73 +2,44 @@
 import TestComp from "../components/TestComp.astro";
 const slug = Astro.params.slug;
 const response = await fetch(
-	`https://devlloyd.recruitee.com/api/offers/${slug}`
+	`https://qwicko.recruitee.com/api/offers/${slug}`
 	// `https://rocketsourcers.recruitee.com/api/offers/${slug}`
 );
 const data = await response.json();
 ---
 
-<script type="javascript">
-	alert(window.innerWidth);
-	console.log(window.location.pathname);
-	const form = document.querySelector("#candidateForm");
-	form.addEventListener("submit", (event) => {
-		event.preventDefault();
 
-		const formData = new FormData(form);
+<script>
+    document.getElementById("candidateForm").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Voorkom standaardgedrag van formulier verzenden
+		// @ts-ignore
+        const formData = new FormData(this);
 
-		// Convert form data to JSON excluding file input fields
-		const jsonData = {};
-		const fileData = new FormData();
+        try {
+			// @ts-ignore
+            const response = await fetch(this.action, {
+                method: 'POST',
+                body: formData
+            });
 
-		formData.forEach((value, key) => {
-			if (key === "photo" || key === "cv") {
-				// Append file data to a separate FormData for binary upload
-				fileData.append(
-					key,
-					form.elements[key].files[0]
-				);
-			} else {
-				// Include non-file fields in JSON data
-				jsonData[key] = value;
-			}
-		});
+            if (!response.ok) {
+                throw new Error('Network response was not ok: ' + response.status + ' ' + response.statusText);
+            }
 
-		const showData = Object.fromEntries(formData);
-		console.log(showData);
-
-		// Perform the fetch request
-		fetch(
-			`https://devlloyd.recruitee.com/api/offers${window.location.pathname}/candidates`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					candidate: jsonData,
-				}),
-			}
-		)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(
-						`HTTP error! Status: ${response.status}, Message: ${response.statusText}`
-					);
-				}
-				return response.json();
-			})
-			.then((data) => {
-				console.log("Success:", data);
-				// Handle success response
-			})
-			.catch((error) => {
-				console.error("Error:", error.message);
-				// Handle error
-			});
-	});
+            const data = await response.text();
+            // Toon een succesbericht of voer andere acties uit
+            document.getElementById("result").innerHTML = "<p>Bedankt voor het indienen van uw gegevens!</p>";
+			// @ts-ignore
+            document.getElementById("candidateForm").reset();
+        } catch (error) {
+            // Handel fouten af
+            console.error('Error:', error);
+            document.getElementById("result").innerHTML = "<p>Fout: " + error.message + "</p>";
+        }
+    });
 </script>
 
+<!-- `https://devlloyd.recruitee.com/api/offers${window.location.pathname}/candidates`, -->
 <html lang="nl">
 	<head>
 		<meta charset="utf-8" />
@@ -92,59 +63,26 @@ const data = await response.json();
 			<h1>Functieomschrijving</h1>
 			<span set:html={data.offer.description} />
 			<span set:html={data.offer.requirements} />
-			<a href={data.offer.careers_apply_url}>Apply now</a>
+			<!-- <a href={data.offer.careers_apply_url}>Apply now</a> -->
 
-			<form id="candidateForm">
-				<label for="name">Name:</label>
-				<input
-					type="text"
-					id="name"
-					name="name"
-					required
-				/><br />
-
-				<label for="email">Email:</label>
-				<input
-					type="email"
-					id="email"
-					name="email"
-					required
-				/><br />
-
-				<label for="phone">Phone:</label>
-				<input
-					type="tel"
-					id="phone"
-					name="phone"
-					required
-				/><br />
-
-				<label for="photo">Photo:</label>
-				<input
-					type="file"
-					id="photo"
-					name="photo"
-					accept="image/*"
-				/><br />
-
-				<label for="coverLetter">Cover Letter:</label>
-				<textarea id="coverLetter" name="coverLetter"
-				></textarea><br />
-
-				<label for="cv">CV:</label>
-				<input
-					type="file"
-					id="cv"
-					name="cv"
-					accept=".pdf"
-				/><br />
-
-				<!-- <button type="button" onclick="submitForm()"
-					>Submit</button
-				> -->
-				<!-- submit the form to recruitee -->
-				<input type="submit" value="Submit" />
+			<form id="candidateForm" action=`https://qwicko.recruitee.com/api/offers/${slug}/candidates` method="post"
+    			enctype="multipart/form-data">
+    			<label for="name">Naam:</label><br>
+    			<input type="text" id="name" name="candidate[name]" required><br>
+    			<label for="email">E-mail:</label><br>
+    			<input type="email" id="email" name="candidate[email]" required><br>
+    			<label for="phone">Telefoonnummer:</label><br>
+    			<input type="tel" id="phone" name="candidate[phone]" required><br>
+    			<label for="photo">Foto:</label><br>
+    			<input type="file" id="photo" name="candidate[photo]" accept="image/*" required><br>
+    			<label for="cover_letter">Sollicitatiebrief:</label><br>
+    			<textarea id="cover_letter" name="candidate[cover_letter]" required></textarea><br>
+    			<label for="cv">CV:</label><br>
+    			<input type="file" id="cv" name="candidate[cv]" accept=".pdf,.doc,.docx" required><br><br>
+    			<input type="submit" value="Verzenden">
 			</form>
+
+<div id="result"></div>
 		</main>
 		<TestComp />
 	</body>
